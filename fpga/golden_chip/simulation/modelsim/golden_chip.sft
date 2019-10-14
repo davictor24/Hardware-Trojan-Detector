@@ -1,0 +1,5 @@
+set tool_name "ModelSim-Altera (VHDL)"
+set corner_file_list {
+	{{"Slow Model"} {golden_chip.vho golden_chip_vhd.sdo}}
+	{{"Fast Model"} {golden_chip_fast.vho golden_chip_vhd_fast.sdo}}
+}

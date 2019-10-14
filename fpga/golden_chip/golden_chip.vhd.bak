@@ -1,0 +1,24 @@
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.STD_LOGIC_UNSIGNED.ALL;
+
+entity counter is
+    Port ( CLK : in STD_LOGIC;
+           CLR : in STD_LOGIC;
+           Q : out STD_LOGIC_VECTOR (4 downto 0) := "00000");
+end program_counter;
+
+architecture Behavioral of counter is
+begin
+    process(CLK, CLR)
+        variable Q_tmp : STD_LOGIC_VECTOR (4 downto 0) := Q; 
+    begin
+        if CLR = '1' then
+            Q_tmp := "00000";
+        elsif rising_edge(CLK) then
+            Q_tmp := Q_tmp + 1; 
+        end if; 
+        Q <= Q_tmp when Ep = '1' else "ZZZZ"; 
+    end process; 
+
+end Behavioral;

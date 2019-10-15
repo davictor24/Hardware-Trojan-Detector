@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 import numpy as np
+import random
 from sklearn.preprocessing import StandardScaler
 from sklearn.decomposition import PCA
 from sklearn import svm
@@ -18,6 +19,7 @@ def load_data():
     for i in range(len(folders)):
         folder = folders[i]
         files = [file for file in listdir(folder) if isfile(join(folder, file))]
+        random.shuffle(files)
         k = int(split*len(files))
         files_train, files_test = files[:k], files[k:]
         for file in files_train:
@@ -51,7 +53,6 @@ def save_obj(obj, folder, file):
 data_train, classes_train, data_test, classes_test, t = load_data()
 golden_series = data_test[0]
 trojan_series = data_test[-1]
-print(classes_test)
 
 # Training
 scaler = StandardScaler()
@@ -68,7 +69,6 @@ classes_pred = [0 if x[0] > threshold else 1 for x in clf.predict_proba(data_tes
 print('Accuracy:', metrics.accuracy_score(classes_test, classes_pred))
 print('Precision:', metrics.precision_score(classes_test, classes_pred))
 print('Recall:', metrics.recall_score(classes_test, classes_pred))
-print(classes_pred)
 
 # Save model
 folder = 'modeldata'

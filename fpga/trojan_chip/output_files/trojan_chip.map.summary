@@ -1,0 +1,14 @@
+Analysis & Synthesis Status : Successful - Mon Oct 14 19:14:28 2019
+Quartus II 64-Bit Version : 13.0.1 Build 232 06/12/2013 SP 1 SJ Web Edition
+Revision Name : trojan_chip
+Top-level Entity Name : trojan_chip
+Family : Cyclone II
+Total logic elements : 13
+    Total combinational functions : 13
+    Dedicated logic registers : 10
+Total registers : 10
+Total pins : 12
+Total virtual pins : 0
+Total memory bits : 0
+Embedded Multiplier 9-bit elements : 0
+Total PLLs : 0

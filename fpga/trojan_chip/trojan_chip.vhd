@@ -1,0 +1,26 @@
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.STD_LOGIC_UNSIGNED.ALL;
+
+entity trojan_chip is
+    Port ( CLK : in STD_LOGIC := '0';
+			  CLR : in STD_LOGIC := '0';
+           Q : inout STD_LOGIC_VECTOR (9 downto 0) := (others => '0'));
+end trojan_chip;
+
+architecture Behavioral of trojan_chip is
+begin
+    process(CLK, CLR)
+    begin
+	     if CLR = '1' then
+            Q <= (others => '0');
+        elsif rising_edge(CLK) then
+		      if Q >= "0111111111" then
+				    Q <= (others => '1');
+				else
+                Q <= Q + 1;
+				end if;
+        end if; 
+    end process; 
+
+end Behavioral;

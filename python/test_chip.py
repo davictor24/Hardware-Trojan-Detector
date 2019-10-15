@@ -1,8 +1,16 @@
 import serial
+from os.path import join
+import jsonpickle
 
 K = 2**10 # number of samples
+threshold = 0.6
 
-# set up the serial line
+def load_obj(folder, file):
+    with open(join(folder, file)) as f:
+        json_string = f.read()
+    return jsonpickle.decode(json_string)
+
+# Set up the serial line
 ser = serial.Serial('COM12', 115200)
 print('Connected to: ' + ser.portstr)
 print('Test running...')
@@ -35,3 +43,17 @@ while True:
 ser.close()
 
 print('Logic test:', 'Passed' if lstatus else 'Failed')
+
+# Load model
+folder = 'modeldata'
+scaler = load_obj(folder, 'scaler.json')
+pca = load_obj(folder, 'pca.json')
+clf = load_obj(folder, 'clf.json')
+
+# Prediction
+series = scaler.transform([p])
+series = pca.transform(series)
+pred = clf.predict_proba(series)[0]
+print()
+print('Trojan probability:', pred[1])
+print('Power SCA test:', 'Passed' if pred[0] > threshold else 'Failed')

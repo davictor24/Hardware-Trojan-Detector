@@ -33,6 +33,7 @@ def load_data():
     return data_train, classes_train, data_test, classes_test, t
 
 def load_series(folder, file):
+    # print(folder, file)
     t = []
     series = []
     with open(join(folder, file)) as f:
@@ -59,7 +60,7 @@ scaler = StandardScaler()
 data_train = scaler.fit_transform(data_train)
 pca = PCA(n_components=100)
 data_train = pca.fit_transform(data_train)
-clf = svm.SVC(kernel='linear', probability=True)
+clf = svm.SVC(kernel='rbf', C=1.0, gamma='scale', probability=True)
 clf.fit(data_train, classes_train)
 
 # Testing

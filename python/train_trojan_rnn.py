@@ -75,7 +75,7 @@ print(model.summary())
 scaler = StandardScaler()
 data_train = scaler.fit_transform(data_train)
 data_train = data_train[..., np.newaxis]
-model.fit(data_train, classes_train, epochs=15)
+train_history = model.fit(np.array(data_train), np.array(classes_train), validation_split = 0.1, epochs=5)
 
 # Testing
 data_test = scaler.transform(data_test)
@@ -93,6 +93,7 @@ model.save(join(folder, 'model.h5'))
 print('Model saved')
 
 # Plot
+plt.figure(1)
 plt.plot(t, golden_series)
 plt.plot(t, trojan_series)
 plt.title('Power traces')
@@ -100,6 +101,31 @@ plt.legend(['Golden', 'Trojan'], loc='upper left')
 plt.xlabel('t (seconds)')
 plt.ylabel('p (mW)')
 plt.minorticks_on()
-plt.grid(b=True, which='major', linestyle='-')
-plt.grid(b=True, which='minor', linestyle='--')
+plt.grid(visible=True, which='major', linestyle='-')
+plt.grid(visible=True, which='minor', linestyle='--')
+
+plt.figure(2)
+plt.plot(train_history.history['accuracy'])
+plt.plot(train_history.history['val_accuracy'])
+plt.title('Model accuracy')
+plt.legend(['training', 'validation'], loc='upper left')
+plt.xlabel('epoch')
+plt.ylabel('accuracy')
+plt.minorticks_on()
+plt.grid(visible=True, which='major', linestyle='-')
+plt.grid(visible=True, which='minor', linestyle='--')
+
+plt.figure(3)
+plt.plot(train_history.history['loss'])
+plt.plot(train_history.history['val_loss'])
+plt.title('Model loss')
+plt.legend(['training', 'validation'], loc='upper left')
+plt.xlabel('epoch')
+plt.ylabel('loss')
+plt.minorticks_on()
+plt.grid(visible=True, which='major', linestyle='-')
+plt.grid(visible=True, which='minor', linestyle='--')
+
 plt.show()
+
+
